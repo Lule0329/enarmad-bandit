@@ -18,16 +18,14 @@ namespace enarmad_bandit
         }
 
         Image[] Images = { Properties.Resources._7, Properties.Resources.hjärter, Properties.Resources.ruter, Properties.Resources.spader };
-        int spins;
+        Image[] Images2 = { Properties.Resources.hjärter, Properties.Resources._7, Properties.Resources.spader, Properties.Resources.ruter };
+        Image[] Images3 = { Properties.Resources.ruter, Properties.Resources.hjärter, Properties.Resources.spader, Properties.Resources._7 };
+        
+        int spins = 100;
+        bool multi = false;
 
-        private void button1_Click(object sender, EventArgs e)
+        private void timers()
         {
-            // Sätter random tid på varje timer (mellan 75 och 125)
-            Random random = new Random();
-            timer1.Interval = random.Next(75, 125);
-            timer2.Interval = random.Next(75, 125);
-            timer3.Interval = random.Next(75, 125);
-            
             // Startar Timers
             if (checkBox1.Checked == false)
             {
@@ -46,7 +44,7 @@ namespace enarmad_bandit
             {
                 timer2.Stop();
             }
-            
+
             if (checkBox3.Checked == false)
             {
                 timer3.Start();
@@ -57,8 +55,43 @@ namespace enarmad_bandit
             }
 
             timer4.Start();
+        }
+        
+        private void checkWin()
+        {
+            if (pictureBox1.Image == Images[0] && pictureBox2.Image == Images[0] && pictureBox3.Image == Images[0] ||
+                pictureBox1.Image == Images[1] && pictureBox2.Image == Images[1] && pictureBox3.Image == Images[1] ||
+                pictureBox1.Image == Images[2] && pictureBox2.Image == Images[2] && pictureBox3.Image == Images[2] ||
+                pictureBox1.Image == Images[3] && pictureBox2.Image == Images[3] && pictureBox3.Image == Images[3])
+            {
+                if (multi == true)
+                {
+                    spins += 10;
+                }
+                else
+                {
+                    spins += 5;
+                }
+            }
+        }
 
-            spins += 1;
+        private void button1_Click(object sender, EventArgs e)
+        {
+            // Sätter random tid på varje timer (mellan 75 och 125)
+            Random random = new Random();
+            timer1.Interval = random.Next(75, 125);
+            timer2.Interval = random.Next(75, 125);
+            timer3.Interval = random.Next(75, 125);
+
+            timers();
+            if (multi == true)
+            {
+                spins -= 2;
+            }
+            else
+            {
+                spins -= 1;
+            }
         }
 
         private void timer4_Tick(object sender, EventArgs e)
@@ -67,7 +100,10 @@ namespace enarmad_bandit
             timer2.Stop();
             timer3.Stop();
             timer4.Stop();
+            checkWin();
             label1.Text = "Spins: " + spins;
+            multi = false;
+            button2.Enabled = true;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
@@ -79,13 +115,13 @@ namespace enarmad_bandit
         private void timer2_Tick(object sender, EventArgs e)
         {
             Random rng = new Random();
-            pictureBox2.Image = Images[rng.Next(0, 3)];
+            pictureBox2.Image = Images2[rng.Next(0, 3)];
         }
 
         private void timer3_Tick(object sender, EventArgs e)
         {
             Random rng = new Random();
-            pictureBox3.Image = Images[rng.Next(0, 3)];
+            pictureBox3.Image = Images3[rng.Next(0, 3)];
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -127,6 +163,12 @@ namespace enarmad_bandit
             {
                 pictureBox3.Enabled = true;
             }
+        }
+
+        private void button2_Click(object sender, EventArgs e)
+        {
+            multi = true;
+            button2.Enabled = true;
         }
     }
 }
