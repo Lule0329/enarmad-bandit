@@ -15,6 +15,12 @@ namespace enarmad_bandit
         public Form1()
         {
             InitializeComponent();
+            button1.BackColor = SystemColors.Control;
+            button2.BackColor = SystemColors.Control;
+            label1.Text = "Spins: " + spins;
+            pictureBox1.Image = Images[0];
+            pictureBox2.Image = Images[0];
+            pictureBox3.Image = Images[0];
         }
 
         Image[] Images = { Properties.Resources._7, Properties.Resources.hjärter, Properties.Resources.ruter, Properties.Resources.spader };
@@ -104,24 +110,25 @@ namespace enarmad_bandit
             label1.Text = "Spins: " + spins;
             multi = false;
             button2.Enabled = true;
+            button2.BackColor = SystemColors.Control;
         }
 
         private void timer1_Tick(object sender, EventArgs e)
         {
             Random rng = new Random();
-            pictureBox1.Image = Images[rng.Next(0, 3)];
+            pictureBox1.Image = Images[rng.Next(0, 4)];
         }
 
         private void timer2_Tick(object sender, EventArgs e)
         {
             Random rng = new Random();
-            pictureBox2.Image = Images2[rng.Next(0, 3)];
+            pictureBox2.Image = Images2[rng.Next(0, 4)];
         }
 
         private void timer3_Tick(object sender, EventArgs e)
         {
             Random rng = new Random();
-            pictureBox3.Image = Images3[rng.Next(0, 3)];
+            pictureBox3.Image = Images3[rng.Next(0, 4)];
         }
 
         private void linkLabel1_LinkClicked(object sender, LinkLabelLinkClickedEventArgs e)
@@ -169,6 +176,7 @@ namespace enarmad_bandit
         {
             multi = true;
             button2.Enabled = true;
+            button2.BackColor = Color.DarkGray;
         }
     }
 }
